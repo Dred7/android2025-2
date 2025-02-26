@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">02-24-25</string>
+
+    <string name="actividad_uno">Actividad A</string>
+    <string name="actividad_dos">Actividad B</string>
+    <string name="actividad_tres">Actividad C</string>
+</resources>
