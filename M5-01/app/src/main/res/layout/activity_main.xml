@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvFibonacci"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="32sp"
+        android:padding="16dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnRetroceso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retroceso" />
+
+        <Button
+            android:id="@+id/btnAvance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avance"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+</LinearLayout>
