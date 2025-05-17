@@ -13,9 +13,12 @@ public class Calculadora implements ICalculadora {
             case MULT:
                 return x.multiply(y);
             case DIV:
+                if(y.compareTo(BigDecimal.ZERO) == 0){
+                    throw new CalculadoraException("Ideterminado");
+                }
                 return x.divide(y);
             case PORC:
-                return BigDecimal.ZERO;
+                return x.multiply(y).divide(BigDecimal.valueOf(100));
         }
         return BigDecimal.ZERO;
     }

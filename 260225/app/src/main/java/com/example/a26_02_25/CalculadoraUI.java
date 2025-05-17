@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class CalculadoraUI implements ICalculadoraUI {
+import java.math.BigDecimal;
 
+public class CalculadoraUI implements ICalculadoraUI {
+    CalculadoraOnResult calculadoraResult = null;
+    ICalculadora logica;
     ICalcudoraMemoria memoria = new CalculadoraMemoria();
     Context context;
     TextView txvDisplay;
@@ -42,7 +45,8 @@ public class CalculadoraUI implements ICalculadoraUI {
 
     Button btnZero;
 
-    public CalculadoraUI(Activity activity) {
+    public CalculadoraUI(Activity activity, ICalculadora logica) {
+        this.logica = logica;
         context = activity.getApplicationContext();
         txvDisplay = activity.findViewById(R.id.salida_textView);
         btnZero = activity.findViewById(R.id.cero_button);
@@ -99,25 +103,75 @@ public class CalculadoraUI implements ICalculadoraUI {
             clearScreen();
         });
         btnMasMenos.setOnClickListener(v -> {
-
+            try {
+                String nuevoValor = memoria.cambiarSigno();
+                txvDisplay.setText(nuevoValor);
+            }catch (CalculadoraException e){
+                txvDisplay.setText(e.getMessage());
+            }
         });
         btnIgual.setOnClickListener(v -> {
+            try {
+            if (calculadoraResult != null) {
+                memoria.igual();
+                calculadoraResult.onResult(
+                        memoria.getX(),
+                        memoria.getY(),
+                        memoria.getOperacion()
+                    );
+                }
+                } catch (CalculadoraException e){
+                    txvDisplay.setText(e.getMessage());
+                }catch (Exception e){
+                txvDisplay.setText("Error inesperado");
 
+            }
         });
         btnResta.setOnClickListener(v -> {
-            addOperation(Operacion.RESTA);
+            try{
+                addOperation(Operacion.RESTA);
+            }catch (CalculadoraException e){
+                txvDisplay.setText(e.getMessage());
+            }
+        });
+        btnSuma.setOnClickListener(v -> {
+            try{
+                addOperation(Operacion.SUMA);
+            }catch (CalculadoraException e){
+                txvDisplay.setText(e.getMessage());
+            }
         });
         btnMultiplicacion.setOnClickListener(v -> {
-            addOperation(Operacion.MULT);
+            try{
+                addOperation(Operacion.MULT);
+            }catch (CalculadoraException e){
+                txvDisplay.setText(e.getMessage());
+            }
         });
         btnDivision.setOnClickListener(v -> {
-            addOperation(Operacion.DIV);
+            try{
+                addOperation(Operacion.DIV);
+            }catch (CalculadoraException e){
+                txvDisplay.setText(e.getMessage());
+            }
         });
         btnPorcentaje.setOnClickListener(v -> {
-            addOperation(Operacion.PORC);
+            try{
+                addOperation(Operacion.PORC);
+            }catch (CalculadoraException e){
+                txvDisplay.setText(e.getMessage());
+            }
         });
         btnPunto.setOnClickListener(v -> {
 
+            String nuevoValor = memoria.concat(".");
+            txvDisplay.setText(nuevoValor);
+
+        });
+
+        setOnResult((x, y, operacion) -> {
+            BigDecimal result = logica.calculate(operacion, x, y);
+            txvDisplay.setText(String.valueOf(result));
         });
     }
 
@@ -134,13 +188,18 @@ public class CalculadoraUI implements ICalculadoraUI {
 
     @Override
     public String addNumber(String numero) {
-        txvDisplay.setText(numero);
-        return memoria.concat(numero);
+        String newValue = memoria.concat(numero);
+        txvDisplay.setText(newValue);
+        return newValue;
     }
 
     @Override
     public void addOperation(Operacion operacion) {
         txvDisplay.setText(Operacion.convert(operacion));
         memoria.concat(operacion);
+    }
+
+    public void setOnResult(CalculadoraOnResult result) {
+        this.calculadoraResult = result;
     }
 }
