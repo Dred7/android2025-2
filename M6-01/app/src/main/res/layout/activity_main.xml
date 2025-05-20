@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/txtPaso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paso: 0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtColisiones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Colisiones: 0"
+        android:textSize="18sp" />
+
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:columnCount="10"
+        android:rowCount="10"
+        android:background="#EEE" />
+
+    <Button
+        android:id="@+id/btnSiguiente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paso Siguiente" />
+
+    <Button
+        android:id="@+id/btnAnterior"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paso Anterior" />
+
+</LinearLayout>
